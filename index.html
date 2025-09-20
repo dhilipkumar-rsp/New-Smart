@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div id="loginSection" class="section active">
+            <div class="login-container">
+                <div class="login-header">
+                    <i class="fas fa-user-clock"></i>
+                    <h1>Smart Attendance</h1>
+                    <p>Intelligent Attendance Management System</p>
+                </div>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="userType" required>
+                            <option value="">Select User Type</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </button>
+                </form>
+                <div class="demo-credentials">
+                    <h4>Demo Credentials:</h4>
+                    <p><strong>Student:</strong> student/student123</p>
+                    <p><strong>Teacher:</strong> teacher/teacher123</p>
+                    <p><strong>Admin:</strong> admin/admin123</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="section">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-user-clock"></i>
+                    Smart Attendance
+                </div>
+                <div class="nav-menu">
+                    <span id="userWelcome"></span>
+                    <button id="logoutBtn" class="btn-secondary">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </nav>
+
+            <div class="dashboard-content">
+                <!-- Student/Teacher Dashboard -->
+                <div id="userDashboard" class="dashboard-panel">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-calendar-check"></i>
+                            <h3 id="totalDays">0</h3>
+                            <p>Total Days</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-check-circle"></i>
+                            <h3 id="presentDays">0</h3>
+                            <p>Present Days</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-times-circle"></i>
+                            <h3 id="absentDays">0</h3>
+                            <p>Absent Days</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-percentage"></i>
+                            <h3 id="attendanceRate">0%</h3>
+                            <p>Attendance Rate</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="action-panel">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button id="markAttendanceBtn" class="btn-primary">
+                                <i class="fas fa-hand-paper"></i>
+                                Mark Attendance
+                            </button>
+                            <button id="viewHistoryBtn" class="btn-secondary">
+                                <i class="fas fa-history"></i>
+                                View History
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Attendance History -->
+                    <div id="historyPanel" class="history-panel" style="display: none;">
+                        <h3>Attendance History</h3>
+                        <div id="attendanceHistory" class="history-list">
+                            <!-- History items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Dashboard -->
+                <div id="adminDashboard" class="dashboard-panel" style="display: none;">
+                    <div class="admin-tabs">
+                        <button class="tab-btn active" data-tab="users">
+                            <i class="fas fa-users"></i>
+                            Manage Users
+                        </button>
+                        <button class="tab-btn" data-tab="reports">
+                            <i class="fas fa-chart-bar"></i>
+                            Reports
+                        </button>
+                    </div>
+
+                    <div id="usersTab" class="tab-content active">
+                        <div class="user-management">
+                            <h3>User Management</h3>
+                            <div id="usersList" class="users-list">
+                                <!-- Users will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="reportsTab" class="tab-content">
+                        <div class="reports-section">
+                            <h3>Attendance Reports</h3>
+                            <div id="reportsContent" class="reports-content">
+                                <!-- Reports will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mark Attendance Modal -->
+        <div id="attendanceModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Mark Attendance</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="attendance-info">
+                        <p><strong>Date:</strong> <span id="currentDate"></span></p>
+                        <p><strong>Time:</strong> <span id="currentTime"></span></p>
+                        <p><strong>Location:</strong> <span id="userLocation">Detecting...</span></p>
+                    </div>
+                    <div class="attendance-actions">
+                        <button id="confirmAttendance" class="btn-primary">
+                            <i class="fas fa-check"></i>
+                            Confirm Attendance
+                        </button>
+                        <button id="cancelAttendance" class="btn-secondary">
+                            <i class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
